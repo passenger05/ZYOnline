@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zhiyou100.dao.TeaDao">
+
+    <insert id="addTea" parameterType="tea">
+
+        insert into
+        tea(shape,
+        color, purity,
+        liquor_color,aroma,taste,leaf,number,rank)
+        values(#{shape},#{color},#{purity},#{liquorColor},#{aroma}
+        ,#{taste},#{leaf},#{key},#{rank}
+        )
+
+    </insert>
+
+
+	<select id="listTea" resultType="tea"
+		parameterType="com.zhiyou100.vo.TeaQueryVo">
+
+		select 
+		id,
+		shape,
+        color, purity,
+        liquor_color,aroma,taste,leaf,rank,gmt_create as createTime
+		
+		from tea
+
+		where tea.status = 0
+		
+		limit #{startIndex}, #{pageSize}
+
+	</select>
+	
+	<select id="listTeaByCreateTimeDesc" resultType="tea"
+        parameterType="com.zhiyou100.vo.TeaQueryVo">
+
+        select 
+        id,
+        shape,
+        color, purity,
+        liquor_color,aroma,taste,leaf,rank,gmt_create as createTime
+        
+        from tea
+
+        where tea.status = 0
+        
+        order by gmt_create desc
+        
+        limit #{startIndex}, #{pageSize} ;
+
+    </select>
+    
+    <select id="listTeaByCreateTime" resultType="tea"
+        parameterType="com.zhiyou100.vo.TeaQueryVo">
+
+        select 
+        id,
+        shape,
+        color, purity,
+        liquor_color,aroma,taste,leaf,rank,gmt_create as createTime
+        
+        from tea
+
+        where tea.status = 0
+        
+        order by gmt_create
+        
+        limit #{startIndex}, #{pageSize} ;
+
+    </select>
+
+
+
+	<select id="listTeaByRank" resultType="tea"
+		parameterType="com.zhiyou100.vo.TeaQueryVo">
+
+		select
+		id,
+		shape,
+		color, purity,
+		liquor_color,aroma,taste,leaf,rank,gmt_create as createTime
+
+		from tea
+
+		where tea.status = 0
+
+		order by number
+
+		limit #{startIndex}, #{pageSize} ;
+
+	</select>
+
+
+	<select id="listTeaByRankDesc" resultType="tea"
+		parameterType="com.zhiyou100.vo.TeaQueryVo">
+
+		select
+		id,
+		shape,
+		color, purity,
+		liquor_color,aroma,taste,leaf,rank,gmt_create as createTime
+
+		from tea
+
+		where tea.status = 0
+
+		order by number desc
+
+		limit #{startIndex}, #{pageSize} ;
+
+	</select>
+	
+	<select id="countByRank" resultType="Integer">
+	
+	select count(*) from tea 
+	
+	where rank=#{rank}
+	
+	</select>
+	
+	<select id="getPageCount" resultType="int">
+    
+    select count(*) from tea
+    
+    </select>
+
+
+</mapper>
